@@ -1,8 +1,6 @@
 package main.models.dao;
 
-
 import main.models.pojo.Journal;
-import main.models.pojo.Lesson;
 import main.utils.DatabaseManager;
 
 import java.sql.*;
@@ -21,81 +19,197 @@ public class JournalDao implements JournalDaoInterface{
                         result.getString("description"));
                 journals.add(journal);
             }
+            result.close();
+            result = null;
         } catch (SQLException e ) {
             e.printStackTrace();
+        } finally {
+            if (result != null) {
+                try {
+                    result.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return journals;
     }
+
     public List<Journal> getAll() {
         List<Journal> journals = null;
-        try{
-            Connection conn = DatabaseManager.getConnectionFromPool();
+        Connection conn = null;
+        Statement statement = null;
+        try {
+            conn = DatabaseManager.getConnectionFromPool();
             String query = "SELECT * FROM journal;";
-            Statement statement = conn.createStatement();
+            statement = conn.createStatement();
             journals = constructFromResult(statement.executeQuery(query));
-        } catch (SQLException e) {
+            statement.close();
+            statement = null;
+            conn.close();
+            conn = null;
+        } catch (SQLException e ) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return journals;
     }
 
     public List<Journal> getById(int id) {
         List<Journal> journals = null;
+        Connection conn = null;
+        PreparedStatement statement = null;
         try{
-            Connection conn = DatabaseManager.getConnectionFromPool();
+            conn = DatabaseManager.getConnectionFromPool();
             String query = "SELECT * FROM journal WHERE id=?;";
-            PreparedStatement statement = conn.prepareStatement(query);
+            statement = conn.prepareStatement(query);
             statement.setInt(1, id);
             journals = constructFromResult(statement.executeQuery());
-        } catch (SQLException e) {
+            statement.close();
+            statement = null;
+            conn.close();
+            conn = null;
+        } catch (SQLException e ) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return journals;
     }
 
     public boolean insertJournal(Journal journal) {
+        Connection conn = null;
+        PreparedStatement statement = null;
         try {
-            Connection conn = DatabaseManager.getConnectionFromPool();
+            conn = DatabaseManager.getConnectionFromPool();
             String query = "INSERT INTO journal (id, lesson_id, student_id)" +
                     " VALUES (?, ?, ?);";
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setInt(1, journal.getId());
-            preparedStatement.setInt(2, journal.getLesson_id());
-            preparedStatement.setInt(3, journal.getStudent_id());
-            preparedStatement.executeUpdate();
+            statement = conn.prepareStatement(query);
+            statement.setInt(1, journal.getId());
+            statement.setInt(2, journal.getLesson_id());
+            statement.setInt(3, journal.getStudent_id());
+            statement.executeUpdate();
+            statement.close();
+            statement = null;
+            conn.close();
+            conn = null;
             return true;
         } catch (SQLException e ) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return false;
     }
 
     public boolean updateJournal(Journal journal) {
+        Connection conn = null;
+        PreparedStatement statement = null;
         try {
-            Connection conn = DatabaseManager.getConnectionFromPool();
+            conn = DatabaseManager.getConnectionFromPool();
             String query = "UPDATE journal SET lesson_id=?, student_id=? WHERE id=?;";
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setInt(1, journal.getLesson_id());
-            preparedStatement.setInt(2, journal.getStudent_id());
-            preparedStatement.setInt(3, journal.getId());
-            preparedStatement.executeUpdate();
+            statement = conn.prepareStatement(query);
+            statement.setInt(1, journal.getLesson_id());
+            statement.setInt(2, journal.getStudent_id());
+            statement.setInt(3, journal.getId());
+            statement.executeUpdate();
+            statement.close();
+            statement = null;
+            conn.close();
+            conn = null;
             return true;
         } catch (SQLException e ) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return false;
     }
 
     public boolean deleteJournal(Journal journal) {
+        Connection conn = null;
+        PreparedStatement statement = null;
         try {
-            Connection conn = DatabaseManager.getConnectionFromPool();
+            conn = DatabaseManager.getConnectionFromPool();
             String query = "DELETE FROM journal WHERE id=?;";
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setInt(1, journal.getId());
-            preparedStatement.executeUpdate();
+            statement = conn.prepareStatement(query);
+            statement.setInt(1, journal.getId());
+            statement.executeUpdate();
+            statement.close();
+            statement = null;
+            conn.close();
+            conn = null;
             return true;
         } catch (SQLException e ) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return false;
     }

@@ -19,95 +19,231 @@ public class StudyGroupDao implements StudyGroupDaoInterface {
                         result.getString("name"));
                 groups.add(group);
             }
+            result.close();
+            result = null;
         } catch (SQLException e ) {
             e.printStackTrace();
+        } finally {
+            if (result != null) {
+                try {
+                    result.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return groups;
     }
 
     public List<StudyGroup> getAllGroups() {
         List<StudyGroup> groups = null;
+        Connection conn = null;
+        Statement statement = null;
         try {
-            Connection conn = DatabaseManager.getConnectionFromPool();
+            conn = DatabaseManager.getConnectionFromPool();
 
             String query = "SELECT * FROM study_group;";
-            Statement statement = conn.createStatement();
+            statement = conn.createStatement();
             groups = constructFromResult(statement.executeQuery(query));
+            statement.close();
+            statement = null;
+            conn.close();
+            conn = null;
         } catch (SQLException e ) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return groups;
     }
 
     public List<StudyGroup> getById(int id) {
         List<StudyGroup> groups = null;
+        PreparedStatement statement = null;
+        Connection conn = null;
         try {
-            Connection conn = DatabaseManager.getConnectionFromPool();
+            conn = DatabaseManager.getConnectionFromPool();
             String query = "SELECT * FROM study_group WHERE id=?;";
-            PreparedStatement statement = conn.prepareStatement(query);
+            statement = conn.prepareStatement(query);
             statement.setInt(1, id);
             groups = constructFromResult(statement.executeQuery(query));
+            statement.close();
+            statement = null;
+            conn.close();
+            conn = null;
         } catch (SQLException e ) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return groups;
     }
 
     public List<StudyGroup> getByName(String name) {
         List<StudyGroup> groups = null;
+        PreparedStatement statement = null;
+        Connection conn = null;
         try {
-            Connection conn = DatabaseManager.getConnectionFromPool();
+            conn = DatabaseManager.getConnectionFromPool();
             String query = "SELECT * FROM study_group WHERE name=?;";
-            PreparedStatement statement = conn.prepareStatement(query);
+            statement = conn.prepareStatement(query);
             statement.setString(1, name);
             groups = constructFromResult(statement.executeQuery(query));
+            statement.close();
+            statement = null;
+            conn.close();
+            conn = null;
         } catch (SQLException e ) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return groups;
     }
 
     public boolean insertStudyGroup(StudyGroup group) {
+        PreparedStatement statement = null;
+        Connection conn = null;
         try {
-            Connection conn = DatabaseManager.getConnectionFromPool();
+            conn = DatabaseManager.getConnectionFromPool();
             String query = "INSERT INTO study_group (id, name)" +
                     " VALUES (?, ?);";
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setInt(1, group.getId());
-            preparedStatement.setString(2, group.getName());
-            preparedStatement.executeUpdate();
+            statement = conn.prepareStatement(query);
+            statement.setInt(1, group.getId());
+            statement.setString(2, group.getName());
+            statement.executeUpdate();
+            statement.close();
+            statement = null;
+            conn.close();
+            conn = null;
             return true;
         } catch (SQLException e ) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return false;
     }
 
     public boolean updateStudyGroup(StudyGroup group) {
+        PreparedStatement statement = null;
+        Connection conn = null;
         try {
-            Connection conn = DatabaseManager.getConnectionFromPool();
+            conn = DatabaseManager.getConnectionFromPool();
             String query = "UPDATE study_group SET name=? WHERE id=?;";
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setString(1, group.getName());
-            preparedStatement.setInt(2, group.getId());
-            preparedStatement.executeUpdate();
+            statement = conn.prepareStatement(query);
+            statement.setString(1, group.getName());
+            statement.setInt(2, group.getId());
+            statement.executeUpdate();
+            statement.close();
+            statement = null;
+            conn.close();
+            conn = null;
             return true;
         } catch (SQLException e ) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return false;
     }
 
     public boolean deleteStudyGroup(StudyGroup group) {
+        PreparedStatement statement = null;
+        Connection conn = null;
         try {
-            Connection conn = DatabaseManager.getConnectionFromPool();
+            conn = DatabaseManager.getConnectionFromPool();
             String query = "DELETE FROM study_group WHERE id=?;";
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setInt(1, group.getId());
-            preparedStatement.executeUpdate();
+            statement = conn.prepareStatement(query);
+            statement.setInt(1, group.getId());
+            statement.executeUpdate();
+            statement.close();
+            statement = null;
+            conn.close();
+            conn = null;
             return true;
         } catch (SQLException e ) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return false;
     }
