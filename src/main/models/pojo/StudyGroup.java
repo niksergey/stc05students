@@ -1,4 +1,4 @@
-package models.pojo;
+package main.models.pojo;
 
 public class StudyGroup {
     private int id;

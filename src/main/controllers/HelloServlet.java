@@ -1,4 +1,7 @@
-package controllers;
+package main.controllers;
+
+import main.services.StudentService;
+import main.services.StudentServiceInterface;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +14,7 @@ import java.io.IOException;
  * Created by sergey on 18.04.17.
  */
 public class HelloServlet extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");

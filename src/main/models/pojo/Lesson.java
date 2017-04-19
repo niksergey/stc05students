@@ -1,4 +1,4 @@
-package models.pojo;
+package main.models.pojo;
 
 import java.util.Date;
 

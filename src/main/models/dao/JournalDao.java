@@ -1,16 +1,13 @@
-package models.dao;
+package main.models.dao;
 
-import models.pojo.Journal;
+import main.models.pojo.Journal;
 
 import java.util.List;
 
-/**
- * Created by sergey on 18.04.17.
- */
+
 public interface JournalDao {
-    List<Journal> findAll();
-    List<Journal> findById();
-    List<Journal> findByName();
+    List<Journal> getAll();
+    List<Journal> getById();
     boolean insertJournal(Journal journal);
     boolean updateJournal(Journal journal);
     boolean deleteJournal(Journal journal);
