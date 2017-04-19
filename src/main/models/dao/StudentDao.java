@@ -94,10 +94,11 @@ public class StudentDao implements StudentDaoInterface {
             preparedStatement.setInt(3, student.getGroupId());
             preparedStatement.setInt(4, student.getId());
             preparedStatement.executeUpdate();
+            return true;
         } catch (SQLException e ) {
             e.printStackTrace();
         }
-        return true;
+        return false;
     }
 
     public boolean deleteStudent(Student student) {
@@ -107,10 +108,11 @@ public class StudentDao implements StudentDaoInterface {
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setInt(1, student.getId());
             preparedStatement.executeUpdate();
+            return true;
         } catch (SQLException e ) {
             e.printStackTrace();
         }
-        return true;
+        return false;
     }
 
 }

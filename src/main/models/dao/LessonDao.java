@@ -81,10 +81,11 @@ class LessonDao implements LessonDaoInterface {
             preparedStatement.setInt(4, lesson.getRoom());
             preparedStatement.setString(5, lesson.getDescription());
             preparedStatement.executeUpdate();
+            return true;
         } catch (SQLException e ) {
             e.printStackTrace();
         }
-        return true;
+        return false;
     }
 
     public boolean updateLesson(Lesson lesson) {
@@ -99,10 +100,11 @@ class LessonDao implements LessonDaoInterface {
             preparedStatement.setString(4, lesson.getDescription());
             preparedStatement.setInt(5, lesson.getId());
             preparedStatement.executeUpdate();
+            return true;
         } catch (SQLException e ) {
             e.printStackTrace();
         }
-        return true;
+        return false;
     }
 
     public boolean deleteLesson(Lesson lesson) {
@@ -112,10 +114,11 @@ class LessonDao implements LessonDaoInterface {
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setInt(1, lesson.getId());
             preparedStatement.executeUpdate();
+            return true;
         } catch (SQLException e ) {
             e.printStackTrace();
         }
-        return true;
+        return false;
     }
 
 }
