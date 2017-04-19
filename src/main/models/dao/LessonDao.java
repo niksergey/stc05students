@@ -92,7 +92,7 @@ class LessonDao implements LessonDaoInterface {
         try {
             Connection conn = DatabaseManager.getConnectionFromPool();
             String query = "UPDATE lesson SET study_group_id=?, lesson_date=?," +
-                    " room=?, description WHERE id=?;";
+                    " room=?, description=? WHERE id=?;";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setInt(1, lesson.getStudyGroup());
             preparedStatement.setTimestamp(2, new Timestamp(lesson.getLessonDate().getTime()));
