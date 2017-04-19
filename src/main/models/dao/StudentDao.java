@@ -8,15 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StudentDao implements StudentDaoInterface {
-    public List<Student> getAllStudents() {
-        List<Student> students = new ArrayList<Student>(30);
-        ResultSet result;
-        try {
-            Connection conn = DatabaseManager.getConnectionFromPool();
 
-            String query = "SELECT * FROM student;";
-            Statement statement = conn.createStatement();
-            result = statement.executeQuery(query);
+    private List<Student> constructFromResult(ResultSet result) {
+        List<Student> students = new ArrayList<Student>(16);
+        try {
             while (result.next()) {
                 Student student = new Student(
                         result.getInt("id"),
@@ -25,6 +20,19 @@ public class StudentDao implements StudentDaoInterface {
                         result.getInt("group_id"));
                 students.add(student);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return students;
+    }
+
+    public List<Student> getAllStudents() {
+        List<Student> students = null;
+        try {
+            Connection conn = DatabaseManager.getConnectionFromPool();
+            String query = "SELECT * FROM student;";
+            Statement statement = conn.createStatement();
+            students = constructFromResult(statement.executeQuery(query));
         } catch (SQLException e ) {
             e.printStackTrace();
         }
@@ -32,22 +40,13 @@ public class StudentDao implements StudentDaoInterface {
     }
 
     public List<Student> getById(int id) {
-        List<Student> students = new ArrayList<Student>(30);
-        ResultSet result;
+        List<Student> students = null;
         try {
             Connection conn = DatabaseManager.getConnectionFromPool();
             String query = "SELECT * FROM student WHERE id=?;";
             PreparedStatement statement = conn.prepareStatement(query);
             statement.setInt(1, id);
-            result = statement.executeQuery(query);
-            while (result.next()) {
-                Student student = new Student(
-                        result.getInt("id"),
-                        result.getString("name"),
-                        result.getInt("age"),
-                        result.getInt("group_id"));
-                students.add(student);
-            }
+            students = constructFromResult(statement.executeQuery(query));
         } catch (SQLException e ) {
             e.printStackTrace();
         }
@@ -55,22 +54,13 @@ public class StudentDao implements StudentDaoInterface {
     }
 
     public List<Student> getByName(String name) {
-        List<Student> students = new ArrayList<Student>(30);
-        ResultSet result;
+        List<Student> students = null;
         try {
             Connection conn = DatabaseManager.getConnectionFromPool();
             String query = "SELECT * FROM student WHERE name=?;";
             PreparedStatement statement = conn.prepareStatement(query);
             statement.setString(1, name);
-            result = statement.executeQuery(query);
-            while (result.next()) {
-                Student student = new Student(
-                        result.getInt("id"),
-                        result.getString("name"),
-                        result.getInt("age"),
-                        result.getInt("group_id"));
-                students.add(student);
-            }
+            students = constructFromResult(statement.executeQuery(query));
         } catch (SQLException e ) {
             e.printStackTrace();
         }
@@ -99,10 +89,10 @@ public class StudentDao implements StudentDaoInterface {
             Connection conn = DatabaseManager.getConnectionFromPool();
             String query = "UPDATE student SET name=?, age=?, group_id=? WHERE id=?;";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setInt(4, student.getId());
             preparedStatement.setString(1, student.getName());
             preparedStatement.setInt(2, student.getAge());
             preparedStatement.setInt(3, student.getGroupId());
+            preparedStatement.setInt(4, student.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e ) {
             e.printStackTrace();

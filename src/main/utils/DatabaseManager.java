@@ -6,9 +6,6 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-/**
- * Created by sergey on 19.04.17.
- */
 public class DatabaseManager {
     public static Connection getConnectionFromPool() {
         Connection conn = null;

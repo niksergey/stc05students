@@ -8,15 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 class LessonDao implements LessonDaoInterface {
-    public List<Lesson> getAll() {
-        List<Lesson> lessons = new ArrayList<Lesson>(30);
-        ResultSet result;
+    private List<Lesson> constructFromResult(ResultSet result) {
+        List<Lesson> lessons = new ArrayList<Lesson>(16);
+
         try {
-            Connection conn = DatabaseManager.getConnectionFromPool();
-            String query = "SELECT * FROM lesson;";
-            Statement statement = conn.createStatement();
-            result = statement.executeQuery(query);
-//            int id, Date lessonDate, int room, String description, int studyGroup
             while (result.next()) {
                 Lesson lesson = new Lesson(
                         result.getInt("id"),
@@ -26,6 +21,19 @@ class LessonDao implements LessonDaoInterface {
                         result.getInt("study_group_id"));
                 lessons.add(lesson);
             }
+        } catch (SQLException e ) {
+            e.printStackTrace();
+        }
+        return lessons;
+    }
+
+    public List<Lesson> getAll() {
+        List<Lesson> lessons = null;
+        try {
+            Connection conn = DatabaseManager.getConnectionFromPool();
+            String query = "SELECT * FROM lesson;";
+            Statement statement = conn.createStatement();
+            lessons = constructFromResult(statement.executeQuery(query));
         } catch (SQLException e ) {
             e.printStackTrace();
         }
@@ -33,24 +41,13 @@ class LessonDao implements LessonDaoInterface {
     }
 
     public List<Lesson> getById(int id) {
-        List<Lesson> lessons = new ArrayList<Lesson>(30);
-        ResultSet result;
+        List<Lesson> lessons = null;
         try {
             Connection conn = DatabaseManager.getConnectionFromPool();
             String query = "SELECT * FROM lesson WHERE id=?;";
             PreparedStatement statement = conn.prepareStatement(query);
             statement.setInt(1, id);
-            result = statement.executeQuery();
-//            int id, Date lessonDate, int room, String description, int studyGroup
-            while (result.next()) {
-                Lesson lesson = new Lesson(
-                        result.getInt("id"),
-                        new Date(result.getTimestamp("lesson_date").getTime()),
-                        result.getInt("room"),
-                        result.getString("description"),
-                        result.getInt("study_group_id"));
-                lessons.add(lesson);
-            }
+            lessons = constructFromResult(statement.executeQuery(query));
         } catch (SQLException e ) {
             e.printStackTrace();
         }
@@ -58,24 +55,13 @@ class LessonDao implements LessonDaoInterface {
     }
 
     public List<Lesson> getByRoom(int room) {
-        List<Lesson> lessons = new ArrayList<Lesson>(30);
-        ResultSet result;
+        List<Lesson> lessons = null;
         try {
             Connection conn = DatabaseManager.getConnectionFromPool();
             String query = "SELECT * FROM lesson WHERE room=?;";
             PreparedStatement statement = conn.prepareStatement(query);
             statement.setInt(1, room);
-            result = statement.executeQuery();
-//            int id, Date lessonDate, int room, String description, int studyGroup
-            while (result.next()) {
-                Lesson lesson = new Lesson(
-                        result.getInt("id"),
-                        new Date(result.getTimestamp("lesson_date").getTime()),
-                        result.getInt("room"),
-                        result.getString("description"),
-                        result.getInt("study_group_id"));
-                lessons.add(lesson);
-            }
+            lessons = constructFromResult(statement.executeQuery(query));
         } catch (SQLException e ) {
             e.printStackTrace();
         }

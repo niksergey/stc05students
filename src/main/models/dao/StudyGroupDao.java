@@ -9,7 +9,7 @@ import java.util.List;
 
 
 public class StudyGroupDao implements StudyGroupDaoInterface {
-    public List<StudyGroup> getAll() {
+    public List<StudyGroup> getAllGroups() {
         List<StudyGroup> groups = new ArrayList<StudyGroup>(30);
         ResultSet result;
         try {

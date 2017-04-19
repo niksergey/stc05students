@@ -5,7 +5,7 @@ import main.models.pojo.StudyGroup;
 import java.util.List;
 
 public interface StudyGroupDaoInterface {
-    List<StudyGroup> getAll();
+    List<StudyGroup> getAllGroups();
     List<StudyGroup> getById(int id);
     List<StudyGroup> getByName(String name);
     boolean insertStudyGroup(StudyGroup student);
