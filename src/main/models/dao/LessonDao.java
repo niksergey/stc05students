@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface LessonDao {
     List<Lesson> getAll();
-    List<Lesson> getById(int id);
-    List<Lesson> getByRoom(int roomNumber);
+    Lesson getById(int id);
+    Lesson getByRoom(int roomNumber);
     boolean insertLesson(Lesson lesson);
     boolean updateLesson(Lesson lesson);
     boolean deleteLesson(Lesson lesson);
