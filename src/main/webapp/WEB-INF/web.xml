@@ -38,6 +38,13 @@
     <servlet-name>ListServlet</servlet-name>
     <url-pattern>/listStudents</url-pattern>
   </servlet-mapping>
+  <listener>
+    <listener-class>main.controllers.listeners.AppStartListener</listener-class>
+  </listener>
+  <context-param>
+    <param-name>adminEmail</param-name>
+    <param-value>me@nikser.ru</param-value>
+  </context-param>
   <resource-ref>
     <description>postgreSQL Datasource example</description>
     <res-ref-name>jdbc/postgres</res-ref-name>
