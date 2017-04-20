@@ -145,13 +145,12 @@ public class StudentDao implements StudentDaoInterface {
         PreparedStatement statement = null;
         try {
             conn = DatabaseManager.getConnectionFromPool();
-            String query = "INSERT INTO student (id, name, age, group_id) " +
-                    " VALUES (?, ?, ?, ?);";
+            String query = "INSERT INTO student (name, age, group_id) " +
+                    " VALUES (?, ?, ?);";
             statement = conn.prepareStatement(query);
-            statement.setInt(1, student.getId());
-            statement.setString(2, student.getName());
-            statement.setInt(3, student.getAge());
-            statement.setInt(4, student.getGroupId());
+            statement.setString(1, student.getName());
+            statement.setInt(2, student.getAge());
+            statement.setInt(3, student.getGroupId());
             statement.executeUpdate();
             statement.close();
             statement = null;
@@ -217,14 +216,14 @@ public class StudentDao implements StudentDaoInterface {
         return false;
     }
 
-    public boolean deleteStudent(Student student) {
+    public boolean deleteStudent(int id) {
         Connection conn = null;
         PreparedStatement statement = null;
         try {
             conn = DatabaseManager.getConnectionFromPool();
             String query = "DELETE FROM student WHERE id=?;";
             statement = conn.prepareStatement(query);
-            statement.setInt(1, student.getId());
+            statement.setInt(1, id);
             statement.executeUpdate();
             statement.close();
             statement = null;

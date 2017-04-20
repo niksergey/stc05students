@@ -8,5 +8,7 @@ import java.util.List;
  * Created by sergey on 19.04.17.
  */
 public interface StudentServiceInterface {
-    public List<Student> getAllStudents();
+    List<Student> getAllStudents();
+    boolean addStudent(String name, String age, String groupId);
+    boolean deleteStudent(String id);
 }

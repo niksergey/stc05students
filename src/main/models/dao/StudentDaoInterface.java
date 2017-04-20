@@ -9,7 +9,7 @@ public interface StudentDaoInterface {
     List<Student> getByName(String name);
     boolean insertStudent(Student student);
     boolean updateStudent(Student student);
-    boolean deleteStudent(Student student);
+    boolean deleteStudent(int id);
 }
 
 

@@ -14,6 +14,16 @@ public class Student {
         this.groupId = groupId;
     }
 
+    public Student(String name, int age, int groupId) {
+        this.name = name;
+        this.age = age;
+        this.groupId = groupId;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
