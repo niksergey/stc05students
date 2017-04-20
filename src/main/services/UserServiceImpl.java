@@ -10,10 +10,6 @@ import org.apache.log4j.xml.DOMConfigurator;
  * Created by sergey on 20.04.17.
  */
 public class UserServiceImpl implements UserService {
-    static {
-        DOMConfigurator.configure("fileLog.xml");
-    }
-
     private final static Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
 
     private  static UserDao userDao = new UserDaoImpl();

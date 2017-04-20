@@ -1,5 +1,7 @@
 package main.controllers.filters;
 
+        import org.apache.log4j.Logger;
+
         import java.io.IOException;
 
         import javax.servlet.Filter;
@@ -13,6 +15,7 @@ package main.controllers.filters;
 
 
 public class WhiteList implements Filter {
+    private final static Logger LOGGER = Logger.getLogger(WhiteList.class);
 
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -26,6 +29,7 @@ public class WhiteList implements Filter {
         if (userLogin != null) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
+           LOGGER.debug("WHITE LIST" + ((HttpServletRequest) servletRequest).getContextPath());
             ((HttpServletResponse) servletResponse)
                     .sendRedirect(((HttpServletRequest) servletRequest).getContextPath() + "/");
         }

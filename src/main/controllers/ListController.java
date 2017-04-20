@@ -16,9 +16,6 @@ import org.apache.log4j.xml.DOMConfigurator;
 
 
 public class ListController extends HttpServlet {
-    static {
-        DOMConfigurator.configure("fileLog.xml");
-    }
 
     private final static Logger LOGGER = Logger.getLogger(ListController.class);
 
@@ -27,7 +24,6 @@ public class ListController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("value", "Hello student");
-
         req.setAttribute("list", studentService.getAllStudents());
         getServletContext().getRequestDispatcher("/listStudents.jsp").forward(req, resp);
     }
@@ -38,7 +34,7 @@ public class ListController extends HttpServlet {
         String age = req.getParameter("age");
         String groupId = req.getParameter("groupId");
         if (studentService.addStudent(name, age, groupId)) {
-//            req.getSession().setAttribute("userLogin", name);
+            req.getSession().setAttribute("userLogin", name);
             resp.sendRedirect(req.getContextPath() + "/listStudents");
         } else {
             resp.sendRedirect(req.getContextPath() + "/error.jsp");

@@ -6,19 +6,19 @@ import org.apache.log4j.xml.DOMConfigurator;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import java.util.Date;
 
-/**
- * Created by sergey on 20.04.17.
- */
+
 public class AppStartListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-//        DOMConfigurator.configure("fileLog.xml");
+
+        DOMConfigurator.configure(AppStartListener.class.getClassLoader().getResource("log4j.xml"));
 
         ServletContext ctx = servletContextEvent.getServletContext();
         String adminEmail = ctx.getInitParameter("adminEmail");
-        SendMailTLS.sendMail("me@nikser.ru", "log from Library",
-                "hello", null);
-
+        String msg = "[" + new Date() + "] " + ctx.getContextPath() + ctx.getServerInfo();
+        SendMailTLS.sendMail(adminEmail, "Students app started", msg,
+                null);
     }
 
     public void contextDestroyed(ServletContextEvent servletContextEvent) {

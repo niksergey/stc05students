@@ -2,6 +2,7 @@ package main.models.dao;
 
 import main.models.pojo.User;
 import main.utils.DatabaseManager;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,6 +13,8 @@ import java.util.List;
 
 
 public class UserDaoImpl implements UserDao {
+    private final static Logger LOGGER = Logger.getLogger(UserDaoImpl.class);
+
     private List<User> constructFromResult(ResultSet result) {
         List<User> groups = new ArrayList<User>(16);
         try {
@@ -45,18 +48,19 @@ public class UserDaoImpl implements UserDao {
         PreparedStatement statement = null;
         try {
             conn = DatabaseManager.getConnectionFromPool();
-            String query = "SELECT * FROM users WHERE login=?, password=?;";
+            String query = "SELECT * FROM users WHERE login=? AND password=?;";
             statement = conn.prepareStatement(query);
             statement.setString(1, login);
             statement.setString(2, password);
-            students = constructFromResult(statement.executeQuery(query));
+            students = constructFromResult(statement.executeQuery());
             stud = students.iterator().next();
+            LOGGER.debug("user " + stud.getLogin());
             statement.close();
             statement = null;
             conn.close();
             conn = null;
         } catch (SQLException e ) {
-            e.printStackTrace();
+            LOGGER.debug("SqlException in UserDao.findUserByLoginAndPassword ", e);
         } finally {
             if (statement != null) {
                 try {
@@ -74,7 +78,6 @@ public class UserDaoImpl implements UserDao {
             }
         }
         return stud;
-
     }
 
     private User createEntity(ResultSet resultSet) throws SQLException {
