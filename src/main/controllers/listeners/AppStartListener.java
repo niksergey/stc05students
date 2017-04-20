@@ -1,5 +1,6 @@
 package main.controllers.listeners;
 
+import main.utils.SendMailTLS;
 import org.apache.log4j.xml.DOMConfigurator;
 
 import javax.servlet.ServletContext;
@@ -11,7 +12,7 @@ import javax.servlet.ServletContextListener;
  */
 public class AppStartListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-        DOMConfigurator.configure("fileLog.xml");
+//        DOMConfigurator.configure("fileLog.xml");
 
         ServletContext ctx = servletContextEvent.getServletContext();
         String adminEmail = ctx.getInitParameter("adminEmail");
