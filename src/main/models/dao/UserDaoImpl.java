@@ -8,83 +8,40 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class UserDaoImpl implements UserDao {
     private final static Logger LOGGER = Logger.getLogger(UserDaoImpl.class);
 
-    private List<User> constructFromResult(ResultSet result) {
-        List<User> groups = new ArrayList<User>(16);
+    private User createEntity(ResultSet result) {
+        User user = null;
         try {
-            while (result.next()) {
-                User user = new User(result.getLong("id"),
-                        result.getString("login"),
-                        result.getString("password"),
-                        result.getBoolean("is_blocked"));
-                groups.add(user);
-            }
-            result.close();
-            result = null;
+            user = new User(result.getLong("id"),
+                    result.getString("login"),
+                    result.getString("password"),
+                    result.getBoolean("is_blocked"));
         } catch (SQLException e ) {
             e.printStackTrace();
-        } finally {
-            if (result != null) {
-                try {
-                    result.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
-        return groups;
+        return user;
     }
 
     public User findUserByLoginAndPassword(String login, String password) {
-        List<User> students = null;
-        User stud = null;
-        Connection conn = null;
-        PreparedStatement statement = null;
-        try {
-            conn = DatabaseManager.getConnectionFromPool();
-            String query = "SELECT * FROM users WHERE login=? AND password=?;";
-            statement = conn.prepareStatement(query);
-            statement.setString(1, login);
-            statement.setString(2, password);
-            students = constructFromResult(statement.executeQuery());
-            stud = students.iterator().next();
-            LOGGER.debug("user " + stud.getLogin());
-            statement.close();
-            statement = null;
-            conn.close();
-            conn = null;
-        } catch (SQLException e ) {
-            LOGGER.debug("SqlException in UserDao.findUserByLoginAndPassword ", e);
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return stud;
-    }
+        User user = null;
 
-    private User createEntity(ResultSet resultSet) throws SQLException {
-        User user = new User(resultSet.getLong("id"),
-                resultSet.getString("login"),
-                resultSet.getString("password"),
-                resultSet.getBoolean("is_blocked"));
+        String query = "SELECT * FROM users WHERE login=? AND password=?;";
+        try (Connection conn = DatabaseManager.getConnectionFromPool();
+             PreparedStatement statement = conn.prepareStatement(query);
+             ) {
+                statement.setString(1, login);
+                statement.setString(2, password);
+                try (ResultSet result = statement.executeQuery()) {
+                    if (result.next()) {
+                        user = createEntity(result);
+                    }
+                }
+        } catch (SQLException e ) {
+            LOGGER.debug("SqlException in findUserByLoginAndPassword ", e);
+        }
         return user;
     }
 }

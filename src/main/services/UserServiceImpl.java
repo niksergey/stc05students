@@ -4,7 +4,6 @@ import main.models.dao.UserDao;
 import main.models.dao.UserDaoImpl;
 import main.models.pojo.User;
 import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
 
 /**
  * Created by sergey on 20.04.17.
@@ -16,12 +15,17 @@ public class UserServiceImpl implements UserService {
 
     public User auth(String login, String password) {
         User user = userDao.findUserByLoginAndPassword(login, password);
-        LOGGER.debug("user: " + user);
-
-        if (user != null && user.isBlock()) {
+        if (user == null) {
+            LOGGER.debug("User with these credentials not found");
             return null;
         }
-        LOGGER.debug("user not blocked");
+
+        if (user.isBlocked()) {
+            LOGGER.debug("User " + login + " blocked");
+            return null;
+        }
+
+        LOGGER.debug("user: " + user.getLogin());
 
         return user;
     }
