@@ -27,24 +27,4 @@ public class ListController extends HttpServlet {
         req.setAttribute("list", studentService.getAllStudents());
         getServletContext().getRequestDispatcher("/listStudents.jsp").forward(req, resp);
     }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter("name");
-        String age = req.getParameter("age");
-        String groupId = req.getParameter("groupId");
-        if (studentService.addStudent(name, age, groupId)) {
-            req.getSession().setAttribute("userLogin", name);
-            resp.sendRedirect(req.getContextPath() + "/listStudents");
-        } else {
-            resp.sendRedirect(req.getContextPath() + "/error.jsp");
-        }
-//        String stud_id = req.getParameter("deleteStudent");
-//        if(studentService.deleteStudent(stud_id)) {
-////            req.getSession().setAttribute("userLogin", name);
-//            resp.sendRedirect(req.getContextPath() + "/listStudents");
-//        } else {
-//            resp.sendRedirect(req.getContextPath() + "/error.jsp");
-//        }
-    }
 }

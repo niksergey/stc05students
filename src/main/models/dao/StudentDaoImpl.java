@@ -2,12 +2,14 @@ package main.models.dao;
 
 import main.models.pojo.Student;
 import main.utils.DatabaseManager;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class StudentDaoImpl implements StudentDao {
+    private final static Logger LOGGER = Logger.getLogger(StudentDaoImpl.class);
 
     private Student createEntity(ResultSet result) {
         Student student = null;
@@ -18,7 +20,7 @@ public class StudentDaoImpl implements StudentDao {
                     result.getInt("age"),
                     result.getInt("group_id"));
         } catch (SQLException e ) {
-            e.printStackTrace();
+            LOGGER.debug("Error during reading ResultSet");
         }
         return student;
     }
@@ -85,7 +87,7 @@ public class StudentDaoImpl implements StudentDao {
             statement.executeUpdate();
             return true;
         } catch (SQLException e ) {
-            e.printStackTrace();
+            LOGGER.debug("SQLException while inserting student");
         }
         return false;
     }
@@ -112,8 +114,6 @@ public class StudentDaoImpl implements StudentDao {
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setInt(1, id);
             statement.executeUpdate();
-            statement.close();
-
             return true;
         } catch (SQLException e ) {
             e.printStackTrace();

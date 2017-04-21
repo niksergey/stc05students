@@ -23,7 +23,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-        LOGGER.debug("Login/Password: " + login + "/" + password);
+        LOGGER.debug("Login/Password: " + login + "/" + password +  ":" + req.getContextPath());
         if (userService.auth(login, password) != null) {
             req.getSession().setAttribute("userLogin", login);
             resp.sendRedirect(req.getContextPath() + "/listStudents");

@@ -30,7 +30,7 @@ public class UserDaoImpl implements UserDao {
 
         String query = "SELECT * FROM users WHERE login=? AND password=?;";
         try (Connection conn = DatabaseManager.getConnectionFromPool();
-             PreparedStatement statement = conn.prepareStatement(query);
+             PreparedStatement statement = conn.prepareStatement(query)
              ) {
                 statement.setString(1, login);
                 statement.setString(2, password);
