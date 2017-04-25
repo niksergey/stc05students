@@ -4,11 +4,15 @@ import main.models.dao.UserDao;
 import main.models.dao.UserDaoImpl;
 import main.models.pojo.User;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserServiceImpl implements UserService {
     private final static Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
 
-    private  static UserDao userDao = new UserDaoImpl();
+    @Autowired
+    private UserDao userDao;
 
     public User auth(String login, String password) {
         User user = userDao.findUserByLoginAndPassword(login, password);
@@ -25,5 +29,13 @@ public class UserServiceImpl implements UserService {
         LOGGER.debug("user: " + user.getLogin());
 
         return user;
+    }
+
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    public UserDao getUserDao() {
+        return userDao;
     }
 }

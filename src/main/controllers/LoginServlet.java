@@ -3,7 +3,11 @@ package main.controllers;
 import main.services.UserService;
 import main.services.UserServiceImpl;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,11 +16,20 @@ import java.io.IOException;
 
 
 public class LoginServlet extends HttpServlet {
-    private static UserService userService = new UserServiceImpl();
+    @Autowired
+    private UserService userService;
     private final static Logger LOGGER = Logger.getLogger(LoginServlet.class);
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
+                config.getServletContext());
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/login.jsp").forward(req, resp);
+        req.getRequestDispatcher("/jsp/login.jsp").forward(req, resp);
     }
 
     @Override
@@ -28,7 +41,7 @@ public class LoginServlet extends HttpServlet {
             req.getSession().setAttribute("userLogin", login);
             resp.sendRedirect(req.getContextPath() + "/listStudents");
         } else {
-            resp.sendRedirect(req.getContextPath() + "/login.jsp");
+            resp.sendRedirect(req.getContextPath() + "/jsp/login.jsp");
         }
     }
 }

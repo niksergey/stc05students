@@ -3,13 +3,16 @@ package main.models.dao;
 import main.models.pojo.Student;
 import main.utils.DatabaseManager;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class StudentDaoImpl implements StudentDao {
     private final static Logger LOGGER = Logger.getLogger(StudentDaoImpl.class);
+
 
     private Student createEntity(ResultSet result) {
         Student student = null;

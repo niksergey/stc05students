@@ -53,6 +53,13 @@
     <listener>
         <listener-class>main.controllers.listeners.AppStartListener</listener-class>
     </listener>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>WEB-INF/beans.xml</param-value>
+    </context-param>
     <resource-ref>
         <description>postgreSQL Datasource example</description>
         <res-ref-name>jdbc/postgres</res-ref-name>
