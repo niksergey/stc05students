@@ -22,4 +22,6 @@
 
     </beans:bean>
     <beans:bean id="studentDao" class="main.models.dao.StudentDaoImpl"/>
+
+    <beans:bean id="studyGroupDao" class="main.services.GroupServiceImpl"/>
 </beans:beans>

@@ -10,5 +10,5 @@ public interface StudyGroupDao {
     StudyGroup getByName(String name);
     boolean insertStudyGroup(StudyGroup student);
     boolean updateStudyGroup(StudyGroup student);
-    boolean deleteStudyGroup(StudyGroup student);
+    boolean deleteStudyGroup(int id);
 }
