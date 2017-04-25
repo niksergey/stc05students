@@ -23,7 +23,7 @@ public class ListController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("value", "Hello student");
+        req.setAttribute("infoText", "Список студентов");
         req.setAttribute("list", studentService.getAllStudents());
         getServletContext().getRequestDispatcher("/listStudents.jsp").forward(req, resp);
     }
