@@ -14,8 +14,12 @@
     <annotation-driven />
     <context:component-scan base-package="main"/>
     <beans:bean id="userService" class="main.services.UserServiceImpl">
-        <!--<beans:property name="userDao" ref="userDao"/>-->
-        <!--<beans:constructor-arg name="userDao" ref="userDao"/>-->
+        <!--&lt;!&ndash;<beans:property name="userDao" ref="userDao"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<beans:constructor-arg name="userDao" ref="userDao"/>&ndash;&gt;-->
     </beans:bean>
     <beans:bean id="userDao" class="main.models.dao.UserDaoImpl"/>
+    <beans:bean id="studentService" class="main.services.StudentServiceImpl">
+
+    </beans:bean>
+    <beans:bean id="studentDao" class="main.models.dao.StudentDaoImpl"/>
 </beans:beans>

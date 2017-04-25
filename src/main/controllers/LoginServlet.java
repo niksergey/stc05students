@@ -18,6 +18,7 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
     @Autowired
     private UserService userService;
+
     private final static Logger LOGGER = Logger.getLogger(LoginServlet.class);
 
     @Override

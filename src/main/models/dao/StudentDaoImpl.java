@@ -13,7 +13,6 @@ import java.util.List;
 public class StudentDaoImpl implements StudentDao {
     private final static Logger LOGGER = Logger.getLogger(StudentDaoImpl.class);
 
-
     private Student createEntity(ResultSet result) {
         Student student = null;
         try {

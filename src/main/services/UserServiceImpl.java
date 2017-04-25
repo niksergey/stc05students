@@ -1,13 +1,12 @@
 package main.services;
 
 import main.models.dao.UserDao;
-import main.models.dao.UserDaoImpl;
 import main.models.pojo.User;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class UserServiceImpl implements UserService {
     private final static Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
 

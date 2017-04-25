@@ -3,13 +3,19 @@ package main.services;
 import main.models.dao.StudentDaoImpl;
 import main.models.dao.StudentDao;
 import main.models.pojo.Student;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class StudentServiceImpl implements StudentService {
+
     StudentDao studentDao;
+
+    public StudentServiceImpl() {
+    }
 
     public StudentServiceImpl(StudentDao studentDao) {
         this.studentDao = studentDao;
@@ -19,6 +25,7 @@ public class StudentServiceImpl implements StudentService {
         return studentDao;
     }
 
+    @Autowired
     public void setStudentDao(StudentDao studentDao) {
         this.studentDao = studentDao;
     }
