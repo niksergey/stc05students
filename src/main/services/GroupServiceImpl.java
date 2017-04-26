@@ -9,13 +9,13 @@ import java.util.List;
 
 @Service
 public class GroupServiceImpl implements GroupService {
+    @Autowired
     private StudyGroupDao studyGroupDao;
 
     public StudyGroupDao getStudyGroupDao() {
         return studyGroupDao;
     }
 
-    @Autowired
     public void setStudyGroupDao(StudyGroupDao studyGroupDao) {
         this.studyGroupDao = studyGroupDao;
     }

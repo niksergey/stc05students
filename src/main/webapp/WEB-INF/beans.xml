@@ -13,15 +13,13 @@
     <!-- Enables the Spring MVC @Controller programming model -->
     <annotation-driven />
     <context:component-scan base-package="main"/>
+
     <beans:bean id="userService" class="main.services.UserServiceImpl">
         <!--&lt;!&ndash;<beans:property name="userDao" ref="userDao"/>&ndash;&gt;-->
         <!--&lt;!&ndash;<beans:constructor-arg name="userDao" ref="userDao"/>&ndash;&gt;-->
     </beans:bean>
     <beans:bean id="userDao" class="main.models.dao.UserDaoImpl"/>
-    <beans:bean id="studentService" class="main.services.StudentServiceImpl">
-
-    </beans:bean>
+    <beans:bean id="studentService" class="main.services.StudentServiceImpl"/>
     <beans:bean id="studentDao" class="main.models.dao.StudentDaoImpl"/>
-
-    <beans:bean id="studyGroupDao" class="main.services.GroupServiceImpl"/>
+    <beans:bean id="studyGroupDao" class="main.models.dao.StudyGroupDaoImpl"/>
 </beans:beans>

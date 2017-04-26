@@ -101,11 +101,11 @@ public class StudyGroupDaoImpl implements StudyGroupDao {
         return false;
     }
 
-    public boolean deleteStudyGroup(StudyGroup group) {
+    public boolean deleteStudyGroup(int id) {
         String query = "DELETE FROM study_group WHERE id=?;";
         try (Connection conn = DatabaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query)) {
-            statement.setInt(1, group.getId());
+            statement.setInt(1, id);
             statement.executeUpdate();
             return true;
         } catch (SQLException e ) {
