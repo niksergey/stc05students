@@ -2,17 +2,21 @@ package main.services;
 
 import main.models.dao.UserDao;
 import main.models.pojo.User;
+import main.utils.PostProxy;
+import main.utils.Profiling;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@Profiling
 public class UserServiceImpl implements UserService {
     private final static Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserDao userDao;
 
+    @PostProxy
     public User auth(String login, String password) {
         User user = userDao.findUserByLoginAndPassword(login, password);
         if (user == null) {
