@@ -9,20 +9,10 @@
                http://www.springframework.org/schema/beans/spring-beans.xsd
                  http://www.springframework.org/schema/context
                  http://www.springframework.org/schema/context/spring-context.xsd">
-    <!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-    <!-- Enables the Spring MVC @Controller programming model -->
     <annotation-driven />
     <context:component-scan base-package="main"/>
 
     <beans:bean class="main.utils.ProfileBeanPostProcessor"/>
     <beans:bean class="main.utils.PostProxyInvokerContextListener"/>
 
-    <beans:bean id="userService" class="main.services.UserServiceImpl">
-        <!--&lt;!&ndash;<beans:property name="userDao" ref="userDao"/>&ndash;&gt;-->
-        <!--&lt;!&ndash;<beans:constructor-arg name="userDao" ref="userDao"/>&ndash;&gt;-->
-    </beans:bean>
-    <beans:bean id="userDao" class="main.models.dao.UserDaoImpl"/>
-    <beans:bean id="studentService" class="main.services.StudentServiceImpl"/>
-    <beans:bean id="studentDao" class="main.models.dao.StudentDaoImpl"/>
-    <beans:bean id="studyGroupDao" class="main.models.dao.StudyGroupDaoImpl"/>
 </beans:beans>

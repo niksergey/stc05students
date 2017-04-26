@@ -3,12 +3,14 @@ package main.models.dao;
 import main.models.pojo.User;
 import main.utils.DatabaseManager;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Component
 public class UserDaoImpl implements UserDao {
     private final static Logger LOGGER = Logger.getLogger(UserDaoImpl.class);
 

@@ -2,12 +2,13 @@ package main.models.dao;
 
 import main.models.pojo.StudyGroup;
 import main.utils.DatabaseManager;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Component
 public class StudyGroupDaoImpl implements StudyGroupDao {
 
     private StudyGroup createEntity(ResultSet result) {

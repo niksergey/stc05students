@@ -5,6 +5,7 @@ import main.services.UserServiceImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import javax.servlet.ServletConfig;
@@ -14,12 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@
+@Repository
 public class LoginServlet extends HttpServlet {
+    private final static Logger LOGGER = Logger.getLogger(LoginServlet.class);
+
     @Autowired
     private UserService userService;
-
-    private final static Logger LOGGER = Logger.getLogger(LoginServlet.class);
 
     @Override
     public void init(ServletConfig config) throws ServletException {
