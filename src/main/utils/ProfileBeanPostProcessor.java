@@ -19,7 +19,7 @@ public class ProfileBeanPostProcessor implements BeanPostProcessor {
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         Class<?> beanClass = bean.getClass();
         if (beanClass.isAnnotationPresent(Profiling.class)) {
-            LOGGER.info("PP Before Init " + beanName);
+//            LOGGER.info("PP Before Init " + beanName);
             map.put(beanName, beanClass);
         }
         return bean;

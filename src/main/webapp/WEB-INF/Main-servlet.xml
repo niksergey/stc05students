@@ -12,6 +12,10 @@
     <annotation-driven />
     <context:component-scan base-package="main"/>
 
+    <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <beans:property name="prefix" value="/"/>
+        <beans:property name="suffix" value=".jsp"/>
+    </beans:bean>
     <beans:bean class="main.utils.ProfileBeanPostProcessor"/>
     <beans:bean class="main.utils.PostProxyInvokerContextListener"/>
 
