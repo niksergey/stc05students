@@ -20,7 +20,6 @@ public class HelloController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String sayHello() {
-        LOGGER.info("HEEEEEEEYYYYYYYYYYYYY");
         return "login";
     }
 
@@ -32,9 +31,9 @@ public class HelloController {
         LOGGER.debug("Login/Password: " + login + "/" + password);
         if (userService.auth(login, password) != null) {
             mav.addObject("userLogin", login);
-            mav.setViewName("redirect::list");
+            mav.setViewName("redirect:/listStudents");
         } else {
-            mav.setViewName("redirect::/");
+            mav.setViewName("redirect:/");
         }
 
         return mav;
