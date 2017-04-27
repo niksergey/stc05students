@@ -28,7 +28,7 @@ public class ProfileBeanPostProcessor implements BeanPostProcessor {
     @Override
     public Object postProcessAfterInitialization(final Object bean, String beanName) throws BeansException {
         Class beanClass = map.get(beanName);
-        LOGGER.info("PP After Init " + beanName);
+//        LOGGER.info("PP After Init " + beanName);
         if (beanClass != null) {
             return Proxy.newProxyInstance(beanClass.getClassLoader(), beanClass.getInterfaces(),
                     new InvocationHandler() {

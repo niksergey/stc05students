@@ -12,14 +12,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @SessionAttributes("userLogin")
-public class HelloController {
+public class LoginController {
     private final static Logger LOGGER = Logger.getLogger(LoginServlet.class);
 
     @Autowired
     private UserService userService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String sayHello() {
+    public String askCredentials() {
         return "login";
     }
 
