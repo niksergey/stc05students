@@ -30,9 +30,7 @@ public class StudentsController {
 
     @RequestMapping(value = "/students/add", method = RequestMethod.GET)
     public String showAddForm(Model model) {
-        LOGGER.info("IN ADD GET METHOD");
-        model.addAttribute("student", studentService.getBlank());
-        return "studentForm";
+        return "studentAddForm";
     }
 
     @RequestMapping(value = "/students/add", method = RequestMethod.POST)
@@ -51,7 +49,7 @@ public class StudentsController {
     @RequestMapping(value = "/students/edit", method = RequestMethod.GET)
     public String showEditForm(Model model, @RequestParam("id") Integer id) {
         model.addAttribute("student", studentService.getById(id));
-        return "studentForm";
+        return "studentEditForm";
     }
 
     @RequestMapping(value = "/students/edit", method = RequestMethod.POST)
