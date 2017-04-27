@@ -34,14 +34,26 @@ public class StudentServiceImpl implements StudentService {
         return studentDao.getAllStudents();
     }
 
-    public boolean addStudent(String name, String age, String groupId) {
-        int studAge = Integer.valueOf(age);
-        int studGroupId = Integer.valueOf(groupId);
-        return studentDao.insertStudent(new Student(name, studAge , studGroupId));
+    public boolean addStudent(String name, int age, int groupId) {
+        return studentDao.insertStudent(new Student(name, age , groupId));
     }
 
-    public boolean deleteStudent(String id) {
-        int studId = Integer.valueOf(id);
-        return studentDao.deleteStudent(studId);
+    public boolean deleteStudent(int id) {
+        return studentDao.deleteStudent(id);
+    }
+
+    @Override
+    public Student getById(int id) {
+        return studentDao.getById(id);
+    }
+
+    @Override
+    public boolean updateStudent(String name, int age, int groupId, int id) {
+        return studentDao.updateStudent(new Student(id, name, age, groupId));
+    }
+
+    @Override
+    public Student getBlank() {
+        return new Student("default", 99, 1);
     }
 }

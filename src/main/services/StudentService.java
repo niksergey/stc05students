@@ -9,6 +9,9 @@ import java.util.List;
  */
 public interface StudentService {
     List<Student> getAllStudents();
-    boolean addStudent(String name, String age, String groupId);
-    boolean deleteStudent(String id);
+    Student getBlank();
+    boolean addStudent(String name, int age, int groupId);
+    boolean deleteStudent(int id);
+    Student getById(int id);
+    boolean updateStudent(String name, int age, int groupId, int id);
 }

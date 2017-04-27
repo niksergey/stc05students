@@ -50,7 +50,7 @@ public class StudentDaoImpl implements StudentDao {
         try (Connection conn = DatabaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setInt(1, id);
-            try (ResultSet result = statement.executeQuery(query)) {
+            try (ResultSet result = statement.executeQuery()) {
                 if (result.next()) {
                     student = createEntity(result);
                 }
@@ -67,7 +67,7 @@ public class StudentDaoImpl implements StudentDao {
         try (Connection conn = DatabaseManager.getConnectionFromPool();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1, name);
-            try (ResultSet result = statement.executeQuery(query)) {
+            try (ResultSet result = statement.executeQuery()) {
                 if (result.next()) {
                     student = createEntity(result);
                 }
@@ -89,7 +89,7 @@ public class StudentDaoImpl implements StudentDao {
             statement.executeUpdate();
             return true;
         } catch (SQLException e ) {
-            LOGGER.debug("SQLException while inserting student");
+            LOGGER.warn("SQLException while inserting student");
         }
         return false;
     }

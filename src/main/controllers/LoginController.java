@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @SessionAttributes("userLogin")
 public class LoginController {
-    private final static Logger LOGGER = Logger.getLogger(LoginServlet.class);
+    private final static Logger LOGGER = Logger.getLogger(LoginController.class);
 
     @Autowired
     private UserService userService;
@@ -31,7 +31,7 @@ public class LoginController {
         LOGGER.debug("Login/Password: " + login + "/" + password);
         if (userService.auth(login, password) != null) {
             mav.addObject("userLogin", login);
-            mav.setViewName("redirect:/listStudents");
+            mav.setViewName("redirect:/students");
         } else {
             mav.setViewName("redirect:/");
         }
