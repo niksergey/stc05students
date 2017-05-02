@@ -22,10 +22,11 @@
 
     <authentication-manager>
         <authentication-provider>
-            <user-service>
-                <user name="admin" password="123456" authorities="ROLE_USER" />
-                <user name="mkyong" password="123456" authorities="ROLE_USER" />
-            </user-service>
+            <jdbc-user-service data-source-ref="dataSource"
+                               users-by-username-query=
+                                       "select username,password, enabled from users_mk where username=?"
+                               authorities-by-username-query=
+                                       "select username, role from user_roles where username =?  " />
         </authentication-provider>
     </authentication-manager>
 
