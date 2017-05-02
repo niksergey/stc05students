@@ -18,24 +18,37 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String askCredentials() {
-        return "login";
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public ModelAndView askCredentials(
+        @RequestParam(value = "error", required = false) String error,
+        @RequestParam(value = "logout", required = false) String logout) {
+
+            ModelAndView model = new ModelAndView();
+            if (error != null) {
+                model.addObject("error", "Invalid username and password!");
+            }
+
+            if (logout != null) {
+                model.addObject("msg", "You've been logged out successfully.");
+            }
+            model.setViewName("login");
+
+            return model;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ModelAndView login(@RequestParam(value = "login", required = true) String login,
-                              @RequestParam(value = "password", required = true) String password)
-    {
-        ModelAndView mav = new ModelAndView();
-        LOGGER.debug("Login/Password: " + login + "/" + password);
-        if (userService.auth(login, password) != null) {
-            mav.addObject("userLogin", login);
-            mav.setViewName("redirect:/students");
-        } else {
-            mav.setViewName("redirect:/");
-        }
-
-        return mav;
-    }
+//    @RequestMapping(value = "/", method = RequestMethod.POST)
+//    public ModelAndView login(@RequestParam(value = "username", required = true) String login,
+//                              @RequestParam(value = "password", required = true) String password)
+//    {
+//        ModelAndView mav = new ModelAndView();
+//        LOGGER.debug("Login/Password: " + login + "/" + password);
+//        if (userService.auth(login, password) != null) {
+//            mav.addObject("userLogin", login);
+//            mav.setViewName("redirect:/students");
+//        } else {
+//            mav.setViewName("redirect:/");
+//        }
+//
+//        return mav;
+//    }
 }
