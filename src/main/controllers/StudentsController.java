@@ -4,6 +4,7 @@ package main.controllers;
 import main.services.StudentService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,7 @@ public class StudentsController {
         return "studentsList";
     }
 
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/students/add", method = RequestMethod.GET)
     public String showAddForm(Model model) {
         return "studentAddForm";

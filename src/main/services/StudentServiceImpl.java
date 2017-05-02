@@ -4,6 +4,7 @@ import main.models.dao.StudentDaoImpl;
 import main.models.dao.StudentDao;
 import main.models.pojo.Student;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
