@@ -22,9 +22,6 @@ public class StudentsController {
     @RequestMapping(value = "/students", method = RequestMethod.GET)
     public String showList(Model model) {
         model.addAttribute("students", studentService.getAllStudents());
-        for (String key : model.asMap().keySet()) {
-            LOGGER.warn(model.asMap().get(key));
-        }
 
         return "studentsList";
     }

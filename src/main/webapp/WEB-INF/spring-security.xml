@@ -11,7 +11,7 @@
         <intercept-url pattern="/**" access="ROLE_USER, ROLE_ADMIN" />
         <form-login
                 login-page="/login"
-                default-target-url="/students"
+                default-target-url="/students/"
                 authentication-failure-url="/login?error"
                 username-parameter="username"
                 password-parameter="password" />
@@ -24,9 +24,9 @@
         <authentication-provider>
             <jdbc-user-service data-source-ref="dataSource"
                                users-by-username-query=
-                                       "select username,password, enabled from users_mk where username=?"
+                                       "select username, password, enabled from users_mk where username=?;"
                                authorities-by-username-query=
-                                       "select username, role from user_roles where username =?  " />
+                                       "select username, role from user_roles where username =?;" />
         </authentication-provider>
     </authentication-manager>
 
