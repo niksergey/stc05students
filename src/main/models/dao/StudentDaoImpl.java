@@ -3,7 +3,11 @@ package main.models.dao;
 import main.models.pojo.Student;
 import main.utils.DatabaseManager;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,6 +16,7 @@ import java.util.List;
 @Repository
 public class StudentDaoImpl implements StudentDao {
     private final static Logger LOGGER = Logger.getLogger(StudentDaoImpl.class);
+
 
     private Student createEntity(ResultSet result) {
         Student student = null;
@@ -27,20 +32,18 @@ public class StudentDaoImpl implements StudentDao {
         return student;
     }
 
+    @Transactional
     public List<Student> getAllStudents() {
-        String query = "SELECT * FROM student;";
-        List<Student> students = new ArrayList<>(100);
-        try (Connection conn = DatabaseManager.getConnectionFromPool();
-             Statement statement = conn.createStatement()) {
-            try (ResultSet result = statement.executeQuery(query)) {
-                while (result.next()) {
-                    students.add(createEntity(result));
-                }
-            }
-        } catch (SQLException e ) {
-            e.printStackTrace();
-        }
-        return students;
+        List<Student> students;
+//        session.beginTransaction();
+//        StudentEntity studentEntity = session.get(StudentEntity.class, 2);
+//        Student student = new Student()
+//        session.save(entityStudent);
+//        session.getTransaction().commit();
+//        Session currentSession = getCurrentSession();
+//        main.persistence.models.Student student = currentSession.get(main.persistence.models.Student.class, 1);
+//        LOGGER.debug(student);
+        return new ArrayList<>();
     }
 
     public Student getById(int id) {
