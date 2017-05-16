@@ -7,6 +7,9 @@ public class Student {
     private int age;
     private int groupId;
 
+    public Student() {
+    }
+
     public Student(int id, String name, int age, int groupId) {
         this.id = id;
         this.name = name;

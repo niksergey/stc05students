@@ -1,6 +1,7 @@
 package main.controllers;
 
 
+import main.models.dto.StudentDto;
 import main.services.StudentService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +39,12 @@ public class StudentsController {
                                    @RequestParam("age") Integer age,
                                    @RequestParam("groupId") Integer groupId) {
         ModelAndView mav = new ModelAndView();
-        if (!studentService.addStudent(name, age, groupId) ) {
-            LOGGER.warn("Error during insert student");
-            mav.addObject("controllerMsg", "Не удалось добавить студента");
-        }
+
+        StudentDto studentDto = new StudentDto();
+        studentDto.setName(name);
+        studentDto.setAge(age);
+        studentDto.setGroupId(groupId);
+        studentService.addStudent(studentDto);
         mav.setViewName("redirect:/students");
         return mav;
     }

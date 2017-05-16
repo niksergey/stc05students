@@ -4,6 +4,9 @@ public class StudyGroup {
     private int id;
     private String name;
 
+    public StudyGroup() {
+    }
+
     public StudyGroup(String name) {
         this.name = name;
     }

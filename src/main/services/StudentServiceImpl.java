@@ -1,10 +1,15 @@
 package main.services;
 
+import ma.glasnost.orika.MapperFacade;
+import ma.glasnost.orika.MapperFactory;
+import ma.glasnost.orika.impl.DefaultMapperFactory;
 import main.models.dao.StudentDao;
 import main.models.dao.StudentRepo;
+import main.models.dto.StudentDto;
 import main.models.entities.StudentEntity;
 import main.models.entities.StudyGroupEntity;
 import main.models.pojo.Student;
+import main.models.pojo.StudyGroup;
 import main.utils.StudentEditInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +24,15 @@ public class StudentServiceImpl implements StudentService {
     StudentDao studentDao;
     StudentRepo studentRepo;
 
+    MapperFacade mapper;
+
     public StudentServiceImpl() {
+        MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
+        mapperFactory.classMap(StudentEntity.class, StudentDto.class)
+                .field( "studyGroupEntity.id", "groupId")
+                .byDefault()
+                .register();
+        mapper = mapperFactory.getMapperFacade();
     }
 
     public StudentServiceImpl(StudentDao studentDao) {
@@ -40,13 +53,14 @@ public class StudentServiceImpl implements StudentService {
         this.studentRepo = studentRepo;
     }
 
-    public  List<Student> getAllStudents() {
-        List<Student> sts = new ArrayList<>();
-        Iterable<StudentEntity> all = studentRepo.findAll();
-        for (StudentEntity student: all) {
-            sts.add(new Student(student.getId(), student.getName(), student.getAge(),
-                    student.getStudyGroupEntity().getId()));
+    public  List<StudentDto> getAllStudents() {
+        List<StudentDto> sts = new ArrayList<>();
+
+        for (StudentEntity student: studentRepo.findAll()) {
+            StudentDto studentDto = mapper.map(student, StudentDto.class);
+            sts.add(studentDto);
         }
+
         return sts;
     }
 
@@ -61,6 +75,15 @@ public class StudentServiceImpl implements StudentService {
         se.setStudyGroupEntity(sge);
         studentRepo.save(se);
         return true;
+    }
+
+    @Override
+    public StudentDto addStudent(StudentDto student) {
+        StudentEntity studentEntity = mapper.map(student, StudentEntity.class);
+
+        StudentEntity entity = studentRepo.save(studentEntity);
+        StudentDto savedDto = mapper.map(entity, StudentDto.class);
+        return savedDto;
     }
 
     public boolean deleteStudent(int id) {
