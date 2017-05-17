@@ -1,6 +1,7 @@
 package main.models.dao;
 
 import main.models.dao.mappers.StudentMapper;
+import main.models.dto.StudentDto;
 import main.models.entities.StudentEntity;
 import main.models.pojo.Student;
 import main.utils.DatabaseManager;
@@ -38,19 +39,7 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     public List<StudentEntity> getAllStudents() {
-        List<StudentEntity> students;
-        StudentMapper mapper = null;
-
-        try {
-            Reader reader = Resources.getResourceAsReader("mybatis.xml");
-            SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader);
-            mapper = factory.openSession().getMapper(StudentMapper.class);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return mapper.getAllStudents();
+        return studentMapper.getAllStudents();
     }
 
     public Student getById(int id) {
@@ -73,18 +62,7 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public StudentEntity getStudentById(int id) {
-        StudentMapper mapper = null;
-
-        try {
-            Reader reader = Resources.getResourceAsReader("mybatis.xml");
-            SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader);
-            mapper = factory.openSession().getMapper(StudentMapper.class);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return mapper.getStudentById(id);
+        return studentMapper.getStudentById(id);
     }
 
     public Student getByName(String name) {
@@ -134,6 +112,12 @@ public class StudentDaoImpl implements StudentDao {
             e.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public boolean updateStudent(StudentDto student) {
+        studentMapper.updateStudent(student);
+        return true;
     }
 
     public boolean deleteStudent(int id) {

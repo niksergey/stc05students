@@ -16,4 +16,5 @@ public interface StudentService {
     boolean deleteStudent(int id);
     StudentDto getById(int id);
     boolean updateStudent(String name, int age, int groupId, int id);
+    boolean updateStudent(StudentDto student);
 }

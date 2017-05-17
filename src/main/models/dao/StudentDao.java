@@ -1,5 +1,6 @@
 package main.models.dao;
 
+import main.models.dto.StudentDto;
 import main.models.entities.StudentEntity;
 import main.models.pojo.Student;
 import java.util.List;
@@ -11,9 +12,8 @@ public interface StudentDao {
     StudentEntity getStudentById(int id);
     boolean insertStudent(Student student);
     boolean updateStudent(Student student);
+    boolean updateStudent(StudentDto student);
     boolean deleteStudent(int id);
-
-
 }
 
 

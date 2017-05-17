@@ -11,5 +11,9 @@
         SELECT * FROM student WHERE id = #{id}
     </select>
 
+    <select id="updateStudent" parameterType="main.models.dto.StudentDto">
+        UPDATE student SET name = #{name}, age = #{age}, group_id = #{groupId}
+        WHERE id = #{id}
+    </select>
     <resultMap id="rm" type="main.models.entities.StudentEntity"/>
 </mapper>

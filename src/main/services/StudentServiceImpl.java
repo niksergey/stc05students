@@ -111,6 +111,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public boolean updateStudent(StudentDto student) {
+        return studentDao.updateStudent(student);
+    }
+
+    @Override
     public Student getBlank() {
         return new Student("default", 99, 1);
     }

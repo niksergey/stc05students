@@ -61,8 +61,14 @@ public class StudentsController {
                                  @RequestParam("groupId") Integer groupId,
                                  @RequestParam("id") Integer id) {
 
+        StudentDto studentDto = new StudentDto();
+        studentDto.setName(name);
+        studentDto.setAge(age);
+        studentDto.setGroupId(groupId);
+        studentDto.setId(id);
+
         ModelAndView mav = new ModelAndView();
-        if (studentService.updateStudent(name, age, groupId, id) ) {
+        if (studentService.updateStudent(studentDto) ) {
             mav.setViewName("redirect:/students");
         } else {
             mav.addObject("id", id);
