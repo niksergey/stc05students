@@ -1,22 +1,27 @@
 package main.models.dao;
 
+import main.models.dao.mappers.StudentMapper;
+import main.models.entities.StudentEntity;
 import main.models.pojo.Student;
 import main.utils.DatabaseManager;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.io.Reader;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class StudentDaoImpl implements StudentDao {
     private final static Logger LOGGER = Logger.getLogger(StudentDaoImpl.class);
 
+    @Autowired
+    private StudentMapper studentMapper;
 
     private Student createEntity(ResultSet result) {
         Student student = null;
@@ -32,18 +37,20 @@ public class StudentDaoImpl implements StudentDao {
         return student;
     }
 
-    @Transactional
-    public List<Student> getAllStudents() {
-        List<Student> students;
-//        session.beginTransaction();
-//        StudentEntity studentEntity = session.get(StudentEntity.class, 2);
-//        Student student = new Student()
-//        session.save(entityStudent);
-//        session.getTransaction().commit();
-//        Session currentSession = getCurrentSession();
-//        main.persistence.models.Student student = currentSession.get(main.persistence.models.Student.class, 1);
-//        LOGGER.debug(student);
-        return new ArrayList<>();
+    public List<StudentEntity> getAllStudents() {
+        List<StudentEntity> students;
+        StudentMapper mapper = null;
+
+        try {
+            Reader reader = Resources.getResourceAsReader("mybatis.xml");
+            SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader);
+            mapper = factory.openSession().getMapper(StudentMapper.class);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return mapper.getAllStudents();
     }
 
     public Student getById(int id) {
@@ -62,6 +69,22 @@ public class StudentDaoImpl implements StudentDao {
             e.printStackTrace();
         }
         return student;
+    }
+
+    @Override
+    public StudentEntity getStudentById(int id) {
+        StudentMapper mapper = null;
+
+        try {
+            Reader reader = Resources.getResourceAsReader("mybatis.xml");
+            SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader);
+            mapper = factory.openSession().getMapper(StudentMapper.class);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return mapper.getStudentById(id);
     }
 
     public Student getByName(String name) {

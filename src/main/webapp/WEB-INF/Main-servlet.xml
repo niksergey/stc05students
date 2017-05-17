@@ -26,7 +26,29 @@
 
     <!--<bean id="StudentEditInterceptor" class="main.utils.StudentEditInterceptor" />-->
 
-    <mvc:resources mapping="/resources/**" location="/resources/bootstrap_theme/"
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource2" />
+
+        <property name="typeAliasesPackage" value="main.models.entities"/>
+
+        <property name="mapperLocations" value="classpath:mybatis-mappers.xml" />
+
+    </bean>
+
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+
+        <property name="basePackage" value="main.models.dao.mappers" />
+
+    </bean>
+
+
+    <mvc:resources mapping="/main.resources/**" location="/resources/bootstrap_theme/"
                    cache-period="31556926"/>
 
     <security:global-method-security secured-annotations="enabled" />

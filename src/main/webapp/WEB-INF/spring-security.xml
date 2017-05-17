@@ -13,7 +13,7 @@
                 login-page="/login"
                 default-target-url="/students"
                 authentication-failure-url="/login?error"
-                authentication-success-forward-url="/students"
+                always-use-default-target="true"
                 username-parameter="username"
                 password-parameter="password" />
         <logout logout-success-url="/login?logout" />

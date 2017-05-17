@@ -5,18 +5,18 @@ import javax.persistence.*;
 @Entity
 @Table(name = "student", schema = "public", catalog = "students")
 public class StudentEntity {
-    private int id;
+    private Integer id;
     private String name;
     private Integer age;
     private StudyGroupEntity studyGroupEntity;
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -4,6 +4,7 @@ import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
 import main.models.dao.StudentDao;
+import main.models.dao.StudentDaoImpl;
 import main.models.dao.StudentRepo;
 import main.models.dto.StudentDto;
 import main.models.entities.StudentEntity;
@@ -32,6 +33,9 @@ public class StudentServiceImpl implements StudentService {
                 .field( "studyGroupEntity.id", "groupId")
                 .byDefault()
                 .register();
+        mapperFactory.classMap(Student.class, StudentDto.class)
+                .byDefault()
+                .register();
         mapper = mapperFactory.getMapperFacade();
     }
 
@@ -56,7 +60,11 @@ public class StudentServiceImpl implements StudentService {
     public  List<StudentDto> getAllStudents() {
         List<StudentDto> sts = new ArrayList<>();
 
-        for (StudentEntity student: studentRepo.findAll()) {
+//        for (StudentEntity student: studentRepo.findAll()) {
+//            StudentDto studentDto = mapper.map(student, StudentDto.class);
+//            sts.add(studentDto);
+//        }
+        for (StudentEntity student : studentDao.getAllStudents()) {
             StudentDto studentDto = mapper.map(student, StudentDto.class);
             sts.add(studentDto);
         }
@@ -91,8 +99,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student getById(int id) {
-        return studentDao.getById(id);
+    public StudentDto getById(int id) {
+//        return studentDao.getById(id);
+        StudentDto student = mapper.map(studentDao.getStudentById(id), StudentDto.class);
+        return student;
     }
 
     @Override
