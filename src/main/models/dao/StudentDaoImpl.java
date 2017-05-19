@@ -127,7 +127,7 @@ public class StudentDaoImpl implements StudentDao {
             statement.setInt(1, id);
             statement.executeUpdate();
             return true;
-        } catch (SQLException e ) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
