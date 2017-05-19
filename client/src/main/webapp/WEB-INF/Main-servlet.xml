@@ -17,36 +17,34 @@
     <mvc:annotation-driven />
     <context:component-scan base-package="main"/>
 
+    <bean id="dataSource2"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+
+        <property name="driverClassName" value="org.postgresql.Driver" />
+        <property name="url" value="jdbc:postgresql://localhost:5432/students" />
+        <property name="username" value="head_student" />
+        <property name="password" value="rudn" />
+    </bean>
+
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <!--<bean id="handlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" p:interceptors-ref="StudentEditInterceptor" />-->
-
-    <!--<bean id="StudentEditInterceptor" class="main.utils.StudentEditInterceptor" />-->
-
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource2" />
-
-        <property name="typeAliasesPackage" value="main.models.entities"/>
-
-        <property name="mapperLocations" value="classpath:mybatis-mappers.xml" />
-
+    <bean id="userService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+        <property name="serviceUrl" value="rmi://localhost:1199/userService"/>
+        <property name="serviceInterface" value="main.services.UserService"/>
     </bean>
 
-    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-
-        <constructor-arg index="0" ref="sqlSessionFactory" />
-
+    <bean id="studentService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+        <property name="serviceUrl" value="rmi://localhost:1199/studentService"/>
+        <property name="serviceInterface" value="main.services.StudentService"/>
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-
-        <property name="basePackage" value="main.models.dao.mappers" />
-
+    <bean id="groupService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+        <property name="serviceUrl" value="rmi://localhost:1199/groupService"/>
+        <property name="serviceInterface" value="main.services.GroupService"/>
     </bean>
-
 
     <mvc:resources mapping="/main.resources/**" location="/resources/bootstrap_theme/"
                    cache-period="31556926"/>

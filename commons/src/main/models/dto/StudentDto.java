@@ -1,6 +1,8 @@
 package main.models.dto;
 
-public class StudentDto {
+import java.io.Serializable;
+
+public class StudentDto implements Serializable {
     private Integer id;
     private String name;
     private int age;
