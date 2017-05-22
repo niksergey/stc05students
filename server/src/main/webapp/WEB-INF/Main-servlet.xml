@@ -12,8 +12,11 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
+    <import resource="spring-database.xml"/>
+
     <mvc:annotation-driven />
     <context:component-scan base-package="main"/>
+
 
     <bean id="userService" class="main.services.UserServiceImpl"/>
 
@@ -27,7 +30,7 @@
     <bean id="studentService" class="main.services.StudentServiceImpl"/>
 
     <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
-        <property name="serviceName" value="studentService" />
+        <property name="serviceName" value="studentService/test" />
         <property name="service" ref="studentService" />
         <property name="serviceInterface" value="main.services.StudentService"/>
         <property name="registryPort" value="1199" />

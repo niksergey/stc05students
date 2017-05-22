@@ -37,7 +37,7 @@
     </bean>
 
     <bean id="studentService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
-        <property name="serviceUrl" value="rmi://localhost:1199/studentService"/>
+        <property name="serviceUrl" value="rmi://localhost:1199/studentService/test"/>
         <property name="serviceInterface" value="main.services.StudentService"/>
     </bean>
 
